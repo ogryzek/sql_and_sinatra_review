@@ -114,3 +114,52 @@ get '/new' do
   erb :add_song, layout: :default_layout
 end
 ```
+Let's add some functionality so we can submit input to our form, and save it in a songs key-value store in a session.
+
+let's start by enabling sessions. To do so, simply add `enable :sessions` to our `songer.rb` file.
+```ruby
+# songer.rb
+require 'sinatra'
+
+enable :sessions
+
+get '/' do
+  erb :index, layout: :default_layout
+end
+
+get '/new' do
+  erb :add_song, layout: :default_layout
+end
+```
+Let's revisit our form, and make sure it's doing what we want it to. We want to use it to submit form data and pass a key-value store called params to our `songer.rb`.
+```erb
+<% # views/add_song.erb %>
+
+<h1>Add Song</h1>
+
+<form method="POST">
+  artist: <input name="artist"><br>
+  title: <input name="title"><br>
+  video: <input name="video"><br>
+  <input type="submit">
+</form>
+```
+Now that we have a params hash available to us, let's redirect back to our index, and (for now) display the params, if there are any.
+```ruby
+# songer.rb
+require 'sinatra'
+
+enable :sessions
+
+get '/' do
+  erb :index, layout: :default_layout
+end
+
+get '/new' do
+  erb :add_song, layout: default_layout
+end
+
+post '/new' do
+  "artist: #{params[:artist]}, title: #{params[:title]}, video: #{params[:video]}"
+end
+```
