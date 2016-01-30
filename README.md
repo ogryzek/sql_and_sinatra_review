@@ -137,7 +137,7 @@ Let's revisit our form, and make sure it's doing what we want it to. We want to 
 
 <h1>Add Song</h1>
 
-<form method="POST">
+<form method="POST" action="/">
   artist: <input name="artist"><br>
   title: <input name="title"><br>
   video: <input name="video"><br>
@@ -159,7 +159,37 @@ get '/new' do
   erb :add_song, layout: default_layout
 end
 
-post '/new' do
+post '/' do
   "artist: #{params[:artist]}, title: #{params[:title]}, video: #{params[:video]}"
 end
 ```
+Things are going pretty good, so far! Let's go for a home run by storing the params data in a songs hash in the session. We can then use the session songs hash to populate data displayed on the index page.
+
+```ruby
+# songer.rb
+require 'sinatra'
+
+enable :sessions
+
+get '/' do
+  erb :index, layout: :default_layout
+end
+
+get '/new' do
+  erb :add_song, layout: default_layout
+end
+
+post '/' do
+  artist = params[:artist]
+  title = params[:title]
+  video = params[:video]
+  session[:songs] = {} unless session[:songs]
+  session[:songs][artist] = {title => video}
+  erb :index, layout: :default_layout
+end
+```
+Now that we have the data avaiable through our session, let's use it to fill out a table on our index page that looks something like this:
+  
+artist | title
+--- | ---
+White Rabbits | [Heavy Metal](https://www.youtube.com/watch?v=OQ7Bc-nrplw)
