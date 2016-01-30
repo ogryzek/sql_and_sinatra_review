@@ -1,5 +1,9 @@
 require 'sinatra'
 
 get '/' do
-  "<h1>Hello!</h1>"
+  erb :index, layout: :default_layout
+end
+
+get '/new' do
+  erb :add_song, layout: :default_layout
 end

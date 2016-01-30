@@ -69,8 +69,48 @@ require 'sinatra'
 get '/' do
   erb :index
 end
+
+get '/new' do
+  erb :add_song
+end
 ```
 add some html to your `views/index.erb` file
 ```html
+<!-- views/index.erb -->
 <h1>Hello!</h1>
+```
+Do the same thing for our add song form.
+```erb
+<!-- views/add_song.erb -->
+<h1>Add Song<h1>
+<form>
+  <input><br>
+  <input><br>
+  <input><br>
+  <input type="submit">
+</form>
+```
+Now that we have multiple pages (even though we only have 2), let's add some navigation. We want all pages going forward to share the same navigation, so it's easier to maintain. We can add a shared layout file.
+```
+touch views/default_layout.erb
+```
+```erb
+<% # views/default_layout.erb %>
+<!DOCTYPE html>
+
+<nav><a href="/">home</a> | <a href="/new">add song</a></nav>
+
+<%= yield %>
+```
+Now that we have a default layout with navigation, let's modify our `songer.rb` to use it
+```ruby
+# songer.rb
+
+get '/' do
+  erb :index, layout: :default_layout
+end
+
+get '/new' do
+  erb :add_song, layout: :default_layout
+end
 ```
