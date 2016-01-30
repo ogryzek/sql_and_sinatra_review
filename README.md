@@ -11,3 +11,9 @@ echo "#My Readme" >> README.md
 git add README.md
 git commit -m "Init Commit: Add README"
 ```
+## SQL Review
+[SQLZoo](www.sqlzoo.net) | [SQLFiddle](www.sqlfiddle.com)  
+  
+Let's start out by [creating a database](http://www.postgresql.org/docs/9.3/static/app-createdb.html) with a table called members.
+```sql
+```
