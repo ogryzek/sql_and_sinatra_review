@@ -11,8 +11,8 @@
         <td><%= artist %></td>
         <td>
           <ul>
-            <% songs.each do |title, video| %>
-              <li><a href="<%= video %>"><%= title %></a></li>
+            <% songs.each do |song| %>
+              <li><a href="<%= song[:video] %>"><%= song[:title] %></a></li>
             <% end %>
           </ul>
         </td>
