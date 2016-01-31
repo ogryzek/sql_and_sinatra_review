@@ -1,1 +1,22 @@
-<h1>Hello!</h1>
+<h1>Songs</h1>
+
+<table border="10px black dotted">
+  <tr>
+    <th>artist</th>
+    <th>title</th>
+  </tr>
+  <% if session[:songs] %>
+    <% session[:songs].each do |artist, songs| %>
+      <tr>
+        <td><%= artist %></td>
+        <td>
+          <ul>
+            <% songs.each do |title, video| %>
+              <li><a href="<%= video %>"><%= title %></a></li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

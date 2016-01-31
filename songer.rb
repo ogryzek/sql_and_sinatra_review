@@ -13,6 +13,10 @@ end
 
 post '/' do
   session[:songs] = {} unless session[:songs]
-  session[:songs][params[:artist]] = {params[:title] => params[:video]}
+  artist = params[:artist]
+  title = params[:title]
+  video = params[:video]
+  session[:songs][artist] = {} unless artist
+  session[:songs][artist] = {title => video}
   erb :index, layout: :default_layout
 end

@@ -184,6 +184,7 @@ post '/' do
   title = params[:title]
   video = params[:video]
   session[:songs] = {} unless session[:songs]
+  session[:songs][artist] = {} unless session[:songs][artist]
   session[:songs][artist] = {title => video}
   erb :index, layout: :default_layout
 end
@@ -193,3 +194,26 @@ Now that we have the data avaiable through our session, let's use it to fill out
 artist | title
 --- | ---
 White Rabbits | [Heavy Metal](https://www.youtube.com/watch?v=OQ7Bc-nrplw)
+
+Let's modify the `index.erb` to display songs from the session.
+```erb
+<% # views/index.erb %>
+<h1>Songs</h1>
+
+<table border="10px black dotted">
+    <th>artist</th>
+    <th>title</th>
+    <% session[:songs].each do |artist, songs| %>
+     <tr>
+       <td><%= artist %></td>
+       <td>
+         <ul>
+           <% songs.each do |title, video| %>
+             <li><a href="<%= video %>"><%= title %></a></li>
+           <% end %>
+         </ul>
+       </td>
+     </tr>
+    <% end %>
+</table>
+```
