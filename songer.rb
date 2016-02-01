@@ -7,16 +7,20 @@ get '/' do
 end
 
 get '/new' do
-
   erb :add_song, layout: :default_layout
 end
 
 post '/' do
-  session[:songs] = {} unless session[:songs]
   artist = params[:artist]
-  title = params[:title]
-  video = params[:video]
-  session[:songs][artist] = {} unless artist
-  session[:songs][artist] = {title => video}
+  session[:songs] = {} unless session[:songs]
+  session[:songs][artist] = [] unless session[:songs][artist]
+
+  session[:songs][artist].push(
+    {
+      title: params[:title],
+      video: params[:video]
+    }
+  )
+
   erb :index, layout: :default_layout
 end
